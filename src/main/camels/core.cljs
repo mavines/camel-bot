@@ -1,6 +1,7 @@
 (ns camels.core
   (:require [camels.config :as config]
             [camels.game :as sim]
+            [camels.track-parser :as track]
             [discord.core :as discord]
             [taoensso.timbre.appenders.community.node-spit :as spitter]
             [taoensso.timbre :as timbre
@@ -12,12 +13,13 @@
 (defn help-message []
   "Commands:
 'l^^P random' - Generates a new random track. Displays the track and the probabilities.
-'l^^P [] [orange blue] [green white] [yellow]' - Calculates the odds for the given track.")
+'l^^P score [] [orange blue] [green white] [yellow]' - Calculates the odds for the given track.")
 
 (defn command-processor [command args]
   (debug "Command:" command)
   (debug "Args:" args)
   (condp = command
+    "score" [(str (sim/play-game (track/build-track args)))]
     "random" [(str (sim/play-game))]
     "help" [(help-message)]
     [(help-message)]))
