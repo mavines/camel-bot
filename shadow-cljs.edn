@@ -1,0 +1,23 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/dev"
+  "src/main"
+  "src/test"]
+
+ :dependencies [[cljs-http "0.1.46"]
+                [cljs-node-io "1.1.2"]
+                [nano-id "1.0.0"]
+                [com.taoensso/timbre "5.1.0"]
+                [cider/cider-nrepl "0.25.4"]
+                [merr "0.3.1"]]
+
+ :builds
+ {:app {:target :node-script
+        :output-to "target/main.js"
+        :main camels.core/-main
+        :devtools {:after-load camels.core/reload!}
+        :release {:compilter-options {:optimizations :simple}
+                  :output-to "release/main.js"}}
+  :test {:target :node-test
+         :output-to "target/test/test.js"
+         :autorun true}}}
